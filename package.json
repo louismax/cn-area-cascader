@@ -2,6 +2,19 @@
   "name": "cn-area-cascader-workspace",
   "version": "0.0.0",
   "private": true,
+  "author": "louismax",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/louismax/cn-area-cascader.git"
+  },
+  "homepage": "https://github.com/louismax/cn-area-cascader#readme",
+  "bugs": {
+    "url": "https://github.com/louismax/cn-area-cascader/issues"
+  },
   "workspaces": [
     "packages/*",
     "examples/*"

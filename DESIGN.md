@@ -66,12 +66,14 @@ cn-area-cascader/
 - `core`：仅负责无框架能力
   - 输出统一的树形数据结构（`[{ label, value, code, level, children: [...] }]`）
   - 提供 ID/Label 映射、扁平/搜索工具等辅助函数
+  - 提供编辑回填工具，将业务编码转换为组件 `v-model` 需要的值格式
   - 不依赖 Vue、element、DOM
 - `vue2`：组件实现 + install 入口
   - 依赖 `element-ui`
   - peerDependencies 使用 `vue@^2.7.0`
 - `vue3`：组件实现 + install 入口
   - 依赖 `element-plus`
+  - peerDependencies 使用 `element-plus@^2.10.5`
   - peerDependencies 使用 `vue@^3.0.0`
   - 作为默认主包发布
 
@@ -96,6 +98,19 @@ props（核心）：
 - `modelValue` / `value`：`Array<string>` 或 `Array<number>`（兼容 v-model）
 - `data`：树形数据，可覆盖默认的 core 数据
 - `props`：自定义数据源字段映射
+- `multiple`：是否开启多选区域
+- `collapseSelected`：多选时是否折叠全选子级为父级，默认 `true`
+- `showCheckedStrategy`：Vue3 多选时输入框已选项展示策略，默认跟随 `collapseSelected`
+- `collapseTags`：Vue3 多选时是否折叠已选标签，默认多选时开启
+- `collapseTagsTooltip`：Vue3 多选折叠标签时是否通过 tooltip 展示完整内容，默认 `true`
+- `maxCollapseTags`：Vue3 多选折叠标签最大展示数量，默认 `auto`，按组件宽度估算
+- `selectableNational`：是否显示“全国”根节点，默认 `false`
+- `nationalLabel`：全国根节点展示名称，默认 `全国`
+- `nationalValue`：全国根节点绑定值，默认 `100000`
+- `showAllLevels`：是否展示完整路径文本，默认开启；开启全国根时默认关闭，避免 tag 显示 `全国 / 省`
+- `includePathInfo`：对象返回时是否补充路径上下文信息，默认 `true`
+- `checkStrictly`：单选时是否支持选择任意一级区域，默认 `false`
+- `valueMode`：返回值格式，默认 `leaf-code`
 - `placeholder`
 - `disabled`
 - `clearable`
@@ -114,6 +129,45 @@ events（核心）：
 - 提供 `getAreaText(value)` 便于显示
 - 支持使用者传入自定义省市区数据源
 - 支持通过字段映射适配不同数据结构
+- 支持单选与多选区域，默认单选
+- 支持配置单选时是否只能选择末级，默认只能选择末级
+- 支持多选结果自动折叠，默认将已全选的子级提升为父级返回
+- Vue3 基于 Element Plus 的 `show-checked-strategy` 控制多选输入框展示，默认折叠展示父级
+- Vue3 多选默认折叠标签，并根据组件宽度自动估算可展示 tag 数量，避免输入框被大量标签撑高
+- 可选显示全国根节点，开启后多选数据层级为 `全国 / 省 / 市 / 区`
+- 选择全国时最终返回所有省级数据，不返回全国节点本身
+- 支持配置返回末级编码、路径编码、末级对象、路径树
+
+返回值格式：
+
+```ts
+type AreaValueMode = 'leaf-code' | 'path-code' | 'leaf-node' | 'path-node'
+```
+
+返回值说明：
+- `leaf-code`：返回最后一级区域编码，默认值。例如 `110101`
+- `path-code`：返回当前选中区域的路径编码列表。例如 `['110000', '110100', '110101']`
+- `leaf-node`：返回最后一级区域对象，返回对象不包含 `children`，默认附带路径上下文
+- `path-node`：返回当前选中区域的路径树，只包含当前选中路径上的 `children`，默认每个节点附带路径上下文
+- 开启 `multiple` 后，每种模式返回对应的数组集合
+- 对象返回默认补充 `pathLabels`、`pathValues`、`fullLabel`，方便区分重名区域
+
+编辑回填工具：
+
+```ts
+createAreaModelValue(data, code, options)
+createAreaModelValues(data, codes, options)
+```
+
+用途：
+- `createAreaModelValue`：将单个区域编码转换为当前 `valueMode` 对应的单选 `v-model` 值
+- `createAreaModelValues`：将多个区域编码转换为当前 `valueMode` 对应的多选 `v-model` 值
+- `options.mode` 对应组件的 `valueMode`
+- `options.fields` 支持自定义数据源字段映射
+- `options.includePathInfo` 控制对象返回时是否补充路径上下文
+- 多选默认开启 `collapseSelected`，如果某个父级下所有叶子节点都被选中，则只返回该父级
+- 如需返回所有选中的原始叶子结果，可设置 `collapseSelected=false`
+- Vue3 中 `showCheckedStrategy` 可显式设置为 `parent` 或 `child`，未设置时 `collapseSelected=true` 使用 `parent`，否则使用 `child`
 
 安装示例：
 

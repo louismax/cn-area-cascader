@@ -6,6 +6,10 @@ export interface AreaFieldNames {
   children?: string
   disabled?: string
   leaf?: string
+  multiple?: boolean
+  checkStrictly?: boolean
+  emitPath?: boolean
+  expandTrigger?: 'click' | 'hover'
 }
 
 export interface AreaNode {
@@ -14,6 +18,12 @@ export interface AreaNode {
   code: string
   level: 1 | 2 | 3
   children?: AreaNode[]
+}
+
+export interface AreaOutputNode extends Omit<AreaNode, 'children'> {
+  pathLabels?: string[]
+  pathValues?: AreaValue[]
+  fullLabel?: string
 }
 
 export interface AreaFullNode extends AreaNode {
@@ -33,7 +43,28 @@ export type AreaValue = string | number
 
 export type AreaValuePath = AreaValue[]
 
+export type AreaValueMode = 'leaf-code' | 'path-code' | 'leaf-node' | 'path-node'
+
+export type AreaModelValue =
+  | AreaValue
+  | AreaValuePath
+  | AreaValuePath[]
+  | Record<string, any>
+  | Record<string, any>[]
+  | Record<string, any>[][]
+
 export interface AreaTextOptions {
   separator?: string
   fields?: AreaFieldNames
+}
+
+export interface AreaSelectionCollapseOptions {
+  fields?: AreaFieldNames
+}
+
+export interface AreaModelValueOptions {
+  mode?: AreaValueMode
+  fields?: AreaFieldNames
+  separator?: string
+  includePathInfo?: boolean
 }

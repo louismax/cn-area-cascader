@@ -2,6 +2,50 @@
   "name": "@louismax/cn-area-cascader-vue2",
   "version": "0.1.0",
   "description": "China province city district cascader for Vue 2 and Element UI.",
+  "author": "louismax",
+  "license": "MIT",
+  "sideEffects": [
+    "*.css"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/louismax/cn-area-cascader.git",
+    "directory": "packages/vue2"
+  },
+  "homepage": "https://github.com/louismax/cn-area-cascader#readme",
+  "bugs": {
+    "url": "https://github.com/louismax/cn-area-cascader/issues"
+  },
+  "keywords": [
+    "vue",
+    "vue2",
+    "element-ui",
+    "cascader",
+    "area-cascader",
+    "china-area",
+    "province",
+    "city",
+    "district",
+    "region-selector",
+    "multi-select",
+    "selected-collapse",
+    "parent-collapse",
+    "collapse-selected",
+    "省市区",
+    "省市区联动",
+    "省市区选择器",
+    "三级联动",
+    "三级级联",
+    "行政区划",
+    "地区选择器",
+    "城市选择器",
+    "级联选择",
+    "多选折叠父级",
+    "多选区域折叠"
+  ],
   "type": "module",
   "main": "dist/index.umd.cjs",
   "module": "dist/index.js",
