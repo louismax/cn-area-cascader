@@ -1,0 +1,43 @@
+{
+  "name": "@louismax/cn-area-cascader-core",
+  "version": "0.1.0",
+  "description": "China area tree data and framework-agnostic utilities.",
+  "type": "module",
+  "main": "dist/index.umd.cjs",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./full": {
+      "types": "./dist/full.d.ts",
+      "import": "./dist/full.js"
+    },
+    "./data": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.umd.cjs"
+    },
+    "./data/china-area-tree.json": "./src/data/china-area-tree.json",
+    "./data/china-area-tree.full.json": "./src/data/china-area-tree.full.json"
+  },
+  "files": [
+    "dist",
+    "src/data",
+    "README.md",
+    "package.json"
+  ],
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "vite": "^6.0.3",
+    "typescript": "^5.7.2"
+  }
+}
