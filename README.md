@@ -2,6 +2,8 @@
 
 面向 Vue 的中国省市区级联选择组件库，提供 Vue3（Element Plus）与 Vue2（Element UI）版本。
 
+在线 Demo：https://louismax.github.io/cn-area-cascader/
+
 ## 包
 
 ```text

@@ -24,6 +24,7 @@
     "build:core": "yarn workspace @louismax/cn-area-cascader-core build",
     "build:vue3": "yarn workspace @louismax/cn-area-cascader build",
     "build:vue2": "yarn workspace @louismax/cn-area-cascader-vue2 build",
+    "build:demo": "yarn workspace example-vue3 build",
     "dev:vue3": "yarn workspace example-vue3 dev"
   },
   "devDependencies": {}
