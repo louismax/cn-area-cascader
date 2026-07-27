@@ -22,14 +22,14 @@
         <div class="install-item">
           <strong>Vue3 + Element Plus</strong>
           <code>yarn add @louismax/cn-area-cascader</code>
-          <a href="https://github.com/louismax/cn-area-cascader/tree/main/packages/vue3" target="_blank" rel="noreferrer">
+          <a href="https://github.com/louismax/cn-area-cascader/blob/master/packages/vue3/README.md" target="_blank" rel="noreferrer">
             查看 Vue3 文档
           </a>
         </div>
         <div class="install-item">
           <strong>Vue2 + Element UI</strong>
           <code>yarn add @louismax/cn-area-cascader-vue2</code>
-          <a href="https://github.com/louismax/cn-area-cascader/tree/main/packages/vue2" target="_blank" rel="noreferrer">
+          <a href="https://github.com/louismax/cn-area-cascader/blob/master/packages/vue2/README.md" target="_blank" rel="noreferrer">
             查看 Vue2 文档
           </a>
         </div>
@@ -206,7 +206,6 @@
 import { computed, ref } from 'vue'
 import CnAreaCascader from '@louismax/cn-area-cascader'
 import {
-  chinaAreaTree,
   createAreaModelValue,
   createAreaModelValues,
   findAreaPathByValue,
@@ -246,10 +245,10 @@ const resetValues = () => {
 }
 
 const fillEditValue = () => {
-  editValue.value = createAreaModelValue(chinaAreaTree, '110101', {
+  editValue.value = createAreaModelValue('110101', {
     mode: valueMode.value
   })
-  editMultipleValue.value = createAreaModelValues(chinaAreaTree, ['110101', '110102'], {
+  editMultipleValue.value = createAreaModelValues(['110101', '110102'], {
     mode: valueMode.value
   })
 }
@@ -269,32 +268,32 @@ const toolExamples = computed(() => {
   return [
     {
       title: '根据编码反查完整路径',
-      code: "findAreaPathByValue(chinaAreaTree, '110101')",
-      result: findAreaPathByValue(chinaAreaTree, sampleCode)
+      code: "findAreaPathByValue('110101')",
+      result: findAreaPathByValue(sampleCode)
     },
     {
       title: '生成省市区展示文本',
-      code: "getAreaText(chinaAreaTree, ['110000', '110100', '110101'])",
-      result: getAreaText(chinaAreaTree, ['110000', '110100', '110101'])
+      code: "getAreaText(['110000', '110100', '110101'])",
+      result: getAreaText(['110000', '110100', '110101'])
     },
     {
       title: '编码转换为当前返回格式',
-      code: "createAreaModelValue(chinaAreaTree, '110101', { mode: valueMode })",
-      result: createAreaModelValue(chinaAreaTree, sampleCode, {
+      code: "createAreaModelValue('110101', { mode: valueMode })",
+      result: createAreaModelValue(sampleCode, {
         mode: valueMode.value
       })
     },
     {
       title: '多个编码转换为多选值',
-      code: "createAreaModelValues(chinaAreaTree, ['110101', '110102'], { mode: valueMode })",
-      result: createAreaModelValues(chinaAreaTree, multipleCodes, {
+      code: "createAreaModelValues(['110101', '110102'], { mode: valueMode })",
+      result: createAreaModelValues(multipleCodes, {
         mode: valueMode.value
       })
     },
     {
       title: '拍平树形数据',
-      code: 'flattenAreaTree(chinaAreaTree).slice(0, 3)',
-      result: flattenAreaTree(chinaAreaTree).slice(0, 3)
+      code: 'flattenAreaTree().slice(0, 3)',
+      result: flattenAreaTree().slice(0, 3)
     }
   ]
 })

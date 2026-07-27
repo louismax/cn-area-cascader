@@ -9,6 +9,7 @@ import type {
   AreaValueMode,
   AreaValuePath
 } from './types'
+import chinaAreaTreeData from './data/china-area-tree.json'
 
 export const defaultAreaProps = {
   label: 'label',
@@ -23,10 +24,13 @@ const getFieldNames = (fields?: AreaFieldNames) => ({
   ...fields
 })
 
+const resolveAreaData = <T extends Record<string, any>>(data?: T[]) => data ?? ((chinaAreaTreeData as AreaNode[]) as T[])
+
 export function flattenAreaTree<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   fields?: AreaFieldNames
 ): T[] {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(fields)
   const result: T[] = []
 
@@ -41,19 +45,20 @@ export function flattenAreaTree<T extends Record<string, any> = AreaNode>(
     })
   }
 
-  visit(data)
+  visit(source)
 
   return result
 }
 
 export function findAreaPath<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   valuePath: AreaValuePath,
   fields?: AreaFieldNames
 ): T[] {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(fields)
   const result: T[] = []
-  let nodes: T[] | undefined = data
+  let nodes: T[] | undefined = source
 
   for (const value of valuePath) {
     const node: T | undefined = nodes?.find((item) => String(item[fieldNames.value]) === String(value))
@@ -70,31 +75,34 @@ export function findAreaPath<T extends Record<string, any> = AreaNode>(
 }
 
 export function getAreaText<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   valuePath: AreaValuePath,
   options: AreaTextOptions = {}
 ): string {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(options.fields)
-  const nodes = findAreaPath(data, valuePath, fieldNames)
+  const nodes = findAreaPath(source, valuePath, fieldNames)
 
   return nodes.map((node) => node[fieldNames.label]).join(options.separator ?? ' / ')
 }
 
 export function findAreaByValue<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   value: AreaValue,
   fields?: AreaFieldNames
 ): T | undefined {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(fields)
 
-  return flattenAreaTree(data, fieldNames).find((node) => String(node[fieldNames.value]) === String(value))
+  return flattenAreaTree(source, fieldNames).find((node) => String(node[fieldNames.value]) === String(value))
 }
 
 export function findAreaPathByValue<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   value: AreaValue,
   fields?: AreaFieldNames
 ): T[] {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(fields)
   const targetValue = String(value)
 
@@ -119,14 +127,15 @@ export function findAreaPathByValue<T extends Record<string, any> = AreaNode>(
     return []
   }
 
-  return visit(data, [])
+  return visit(source, [])
 }
 
 export function compactAreaSelection<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   selectedValues: AreaValue[],
   options: AreaSelectionCollapseOptions = {}
 ): T[] {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(options.fields)
   const selectedValueSet = new Set(selectedValues.map((value) => String(value)))
 
@@ -167,14 +176,15 @@ export function compactAreaSelection<T extends Record<string, any> = AreaNode>(
     return result
   }
 
-  return data.flatMap((node) => visit(node).nodes)
+  return source.flatMap((node) => visit(node).nodes)
 }
 
 export function expandAreaSelection<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   selectedValues: AreaValue[],
   options: AreaSelectionCollapseOptions = {}
 ): T[] {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(options.fields)
   const result: T[] = []
   const addedValueSet = new Set<string>()
@@ -197,7 +207,7 @@ export function expandAreaSelection<T extends Record<string, any> = AreaNode>(
   }
 
   selectedValues.forEach((value) => {
-    const node = findAreaByValue(data, value, fieldNames)
+    const node = findAreaByValue(source, value, fieldNames)
 
     if (node) {
       collectLeaves(node)
@@ -260,13 +270,14 @@ const toOutputPath = <T extends Record<string, any>>(
 }
 
 export function createAreaModelValue<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   code: AreaValue,
   options: AreaModelValueOptions = {}
 ): AreaModelValue | undefined {
+  const source = resolveAreaData(data)
   const fieldNames = getFieldNames(options.fields)
   const mode: AreaValueMode = options.mode ?? 'leaf-code'
-  const path = findAreaPathByValue(data, code, fieldNames)
+  const path = findAreaPathByValue(source, code, fieldNames)
 
   if (!path.length) {
     return undefined
@@ -279,22 +290,23 @@ export function createAreaModelValue<T extends Record<string, any> = AreaNode>(
   }
 
   if (mode === 'leaf-node') {
-    return toOutputNode(data, leafNode, options)
+    return toOutputNode(source, leafNode, options)
   }
 
   if (mode === 'path-node') {
-    return toOutputPath(data, path, options)
+    return toOutputPath(source, path, options)
   }
 
   return leafNode[fieldNames.value]
 }
 
 export function createAreaModelValues<T extends Record<string, any> = AreaNode>(
-  data: T[],
+  data?: T[],
   codes: AreaValue[],
   options: AreaModelValueOptions = {}
 ): AreaModelValue[] {
+  const source = resolveAreaData(data)
   return codes
-    .map((code) => createAreaModelValue(data, code, options))
+    .map((code) => createAreaModelValue(source, code, options))
     .filter((value): value is AreaModelValue => value !== undefined)
 }
