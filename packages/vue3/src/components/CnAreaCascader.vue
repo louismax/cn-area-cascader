@@ -63,6 +63,7 @@ const props = withDefaults(defineProps<{
   disabled?: boolean
   clearable?: boolean
   filterable?: boolean
+  autocomplete?: string
   separator?: string
   showAllLevels?: boolean
 }>(), {
@@ -86,6 +87,7 @@ const props = withDefaults(defineProps<{
   disabled: false,
   clearable: true,
   filterable: false,
+  autocomplete: 'off',
   separator: ' / ',
   showAllLevels: undefined
 })
@@ -651,9 +653,16 @@ const updateAutoMaxCollapseTags = () => {
   autoMaxCollapseTags.value = Math.max(1, Math.min(6, Math.floor((width - 96) / 118)))
 }
 
+const syncInputAutocomplete = () => {
+  rootRef.value
+    ?.querySelectorAll<HTMLInputElement>('input')
+    .forEach((input) => input.setAttribute('autocomplete', props.autocomplete))
+}
+
 onMounted(() => {
   updateAutoMaxCollapseTags()
   trimNationalLabel()
+  nextTick(syncInputAutocomplete)
 
   if (!rootRef.value || typeof ResizeObserver === 'undefined') {
     return
@@ -671,6 +680,10 @@ watch(() => props.modelValue, () => {
   pendingInnerValue.value = undefined
   nationalSelected.value = isProvinceModelValue(props.modelValue)
   nextTick(trimNationalLabel)
+})
+
+watch([() => props.autocomplete, () => props.filterable, () => props.disabled, cascaderKey], () => {
+  nextTick(syncInputAutocomplete)
 })
 </script>
 

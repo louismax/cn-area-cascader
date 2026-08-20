@@ -77,6 +77,33 @@ pathValues
 fullLabel
 ```
 
+## 组件属性
+
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `v-model` / `modelValue` | `string \| string[] \| object \| object[]` | - | 组件绑定值。Vue3 使用 `v-model` / `modelValue`，Vue2 可使用 `v-model` / `value`。实际结构由 `valueMode` 和 `multiple` 决定。 |
+| `data` | `AreaNode[]` | 内置省市区数据 | 自定义省市区树形数据。不传时使用组件内置中国省市区数据。 |
+| `props` | `AreaFieldNames` | `defaultAreaProps` | 自定义字段映射，用于适配业务数据中的 `label`、`value`、`children`、`level` 等字段名。 |
+| `multiple` | `boolean` | `false` | 是否开启多选。多选时支持父级选择、半选状态和父级折叠返回。 |
+| `valueMode` | `'leaf-code' \| 'path-code' \| 'leaf-node' \| 'path-node'` | `'leaf-code'` | 控制对外返回格式。默认只返回最后一级编码。 |
+| `collapseSelected` | `boolean` | `true` | 多选时是否折叠父级。开启后，如果某父级下所有子级都被选中，返回结果只保留该父级。 |
+| `selectableNational` | `boolean` | `false` | 是否显示全国根节点。开启后选择层级变为 `全国 / 省 / 市 / 区`，但对外返回不会包含全国节点。 |
+| `nationalLabel` | `string` | `'全国'` | 全国根节点的展示名称。 |
+| `nationalValue` | `string` | `'100000'` | 全国根节点的编码值。 |
+| `checkStrictly` | `boolean` | `false` | 单选时是否允许选择任意层级。默认只能选择末级区县。多选场景本身支持父级选择，通常不需要配置。 |
+| `placeholder` | `string` | `'请选择省市区'` | 输入框占位文案。 |
+| `disabled` | `boolean` | `false` | 是否禁用组件。 |
+| `clearable` | `boolean` | `true` | 是否显示清空按钮。 |
+| `filterable` | `boolean` | `false` | 是否开启搜索。 |
+| `autocomplete` | `string` | `'off'` | Vue3 原生输入框的自动填充策略。 |
+| `separator` | `string` | `' / '` | 路径展示分隔符。 |
+| `showAllLevels` | `boolean` | `true` | 是否在选择器展示完整路径。开启全国根时，组件会隐藏 tag 中的全国前缀，但保留省市区路径。 |
+| `includePathInfo` | `boolean` | `true` | 对象返回时是否附加 `pathLabels`、`pathValues`、`fullLabel` 等路径信息。 |
+| `showCheckedStrategy` | `'child' \| 'parent'` | 跟随 `collapseSelected` | Vue3 + Element Plus 多选展示策略。默认配合父级折叠展示父级 tag。 |
+| `collapseTags` | `boolean` | `true` | Vue3 + Element Plus 多选时是否折叠 tag。 |
+| `collapseTagsTooltip` | `boolean` | `true` | Vue3 + Element Plus tag 折叠后是否通过 tooltip 展示完整内容。 |
+| `maxCollapseTags` | `number \| 'auto'` | `'auto'` | Vue3 + Element Plus 多选折叠时最多展示的 tag 数。`auto` 会根据组件宽度估算。 |
+
 ## 多选父级折叠
 
 ```vue
@@ -126,9 +153,9 @@ area.value = '110101'
 也可以使用 core 工具手动转换：
 
 ```ts
-import { chinaAreaTree, createAreaModelValue } from '@louismax/cn-area-cascader-core'
+import { createAreaModelValue } from '@louismax/cn-area-cascader-core'
 
-const value = createAreaModelValue(chinaAreaTree, '110101', {
+const value = createAreaModelValue('110101', {
   mode: 'leaf-node'
 })
 ```
@@ -137,7 +164,6 @@ const value = createAreaModelValue(chinaAreaTree, '110101', {
 
 ```ts
 import {
-  chinaAreaTree,
   defaultAreaProps,
   flattenAreaTree,
   findAreaByValue,

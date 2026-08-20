@@ -1,6 +1,6 @@
 {
   "name": "@louismax/cn-area-cascader-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "China area tree data and framework-agnostic utilities.",
   "author": "louismax",
   "license": "MIT",

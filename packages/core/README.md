@@ -11,14 +11,10 @@ yarn add @louismax/cn-area-cascader-core
 ## 数据
 
 ```ts
-import { chinaAreaTree } from '@louismax/cn-area-cascader-core'
-```
-
-增强数据：
-
-```ts
 import { chinaAreaTreeFull } from '@louismax/cn-area-cascader-core/full'
 ```
+
+默认数据：工具函数在不传 `data` 时会自动使用内置 `chinaAreaTree`（不再需要手动传入）；如果你有自定义树数据，可在调用时手工传入第三方参数。
 
 ## 工具函数
 
@@ -51,22 +47,22 @@ createAreaModelValues   将多个编码转换为组件多选 v-model 值
 ## 基础查询
 
 ```ts
-const node = findAreaByValue(chinaAreaTree, '110101')
-const path = findAreaPathByValue(chinaAreaTree, '110101')
-const text = getAreaText(chinaAreaTree, ['110000', '110100', '110101'])
+const node = findAreaByValue('110101')
+const path = findAreaPathByValue('110101')
+const text = getAreaText(['110000', '110100', '110101'])
 ```
 
 ## 多选折叠
 
 ```ts
-const compactNodes = compactAreaSelection(chinaAreaTree, ['110101', '110102'])
-const leafNodes = expandAreaSelection(chinaAreaTree, ['110100'])
+const compactNodes = compactAreaSelection(['110101', '110102'])
+const leafNodes = expandAreaSelection(['110100'])
 ```
 
 ## 编辑回填
 
 ```ts
-const value = createAreaModelValue(chinaAreaTree, '110101', {
+const value = createAreaModelValue('110101', {
   mode: 'leaf-node'
 })
 ```
@@ -74,7 +70,7 @@ const value = createAreaModelValue(chinaAreaTree, '110101', {
 多选：
 
 ```ts
-const values = createAreaModelValues(chinaAreaTree, ['110101', '110102'], {
+const values = createAreaModelValues(['110101', '110102'], {
   mode: 'leaf-node'
 })
 ```

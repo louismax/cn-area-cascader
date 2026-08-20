@@ -192,6 +192,18 @@
   resolved "https://registry.npmmirror.com/@jridgewell/sourcemap-codec/-/sourcemap-codec-1.5.5.tgz#6912b00d2c631c0d15ce1a7ab57cd657f2a8f8ba"
   integrity sha512-cYQ9310grqxueWbl+WuIUIaiUaDcj7WOq5fVhEljNVgRfOUhY9fy2zTvfoqWsnebh8Sl70VScFbICvJnLKB0Og==
 
+"@louismax/cn-area-cascader-core@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@louismax/cn-area-cascader-core/-/cn-area-cascader-core-0.1.0.tgz#8fa5de978fd3a7cd2e908275466ee925a5c664e1"
+  integrity sha512-P+XXjrNDABv/9It9FZJSauP7eqE2Fq0TQ6gNfDDsVRU2+TiKA8y7gEimbp/xjNNa7H8ZJNfaKHBeX5LrLtCdEw==
+
+"@louismax/cn-area-cascader@0.1.0":
+  version "0.1.0"
+  resolved "https://registry.npmjs.org/@louismax/cn-area-cascader/-/cn-area-cascader-0.1.0.tgz#01e7b3339f6472b60604de68878a6318fb21443c"
+  integrity sha512-Sk5Mb8Tu5pbBnOPRHTWl66t/YBVA4wJ+V8GHdjeYcsbhpNg5eACb7JUo33mdU3ID8nGgzhFeoGPZ70eobvr6gg==
+  dependencies:
+    "@louismax/cn-area-cascader-core" "0.1.0"
+
 "@popperjs/core@npm:@sxzz/popperjs-es@^2.11.8":
   version "2.11.8"
   resolved "https://registry.npmmirror.com/@sxzz/popperjs-es/-/popperjs-es-2.11.8.tgz#af82ff5ecd0ec5874d3f2356db92223eec5d8661"

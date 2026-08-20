@@ -27,23 +27,30 @@ const areaCode = ref('')
 
 ## Props
 
-```text
-modelValue
-data
-props
-multiple
-collapseSelected
-selectableNational
-valueMode
-checkStrictly
-placeholder
-disabled
-clearable
-filterable
-separator
-showAllLevels
-includePathInfo
-```
+| 属性 | 类型 | 默认值 | 说明 |
+| --- | --- | --- | --- |
+| `modelValue` / `v-model` | `string \| string[] \| object \| object[]` | - | 组件绑定值，实际结构由 `valueMode` 和 `multiple` 决定。 |
+| `data` | `AreaNode[]` | 内置省市区数据 | 自定义省市区树形数据。不传时使用内置数据。 |
+| `props` | `AreaFieldNames` | `defaultAreaProps` | 自定义字段映射，用于适配业务数据中的字段名。 |
+| `multiple` | `boolean` | `false` | 是否开启多选。 |
+| `collapseSelected` | `boolean` | `true` | 多选时是否折叠父级。子级全选时返回父级，避免结果过长。 |
+| `selectableNational` | `boolean` | `false` | 是否显示全国根节点。开启后内部为四级选择，对外返回不包含全国。 |
+| `nationalLabel` | `string` | `'全国'` | 全国根节点的展示名称。 |
+| `nationalValue` | `string` | `'100000'` | 全国根节点的编码值。 |
+| `valueMode` | `'leaf-code' \| 'path-code' \| 'leaf-node' \| 'path-node'` | `'leaf-code'` | 控制返回格式。 |
+| `checkStrictly` | `boolean` | `false` | 单选时是否允许选择任意层级。多选一般不需要配置。 |
+| `placeholder` | `string` | `'请选择省市区'` | 输入框占位文案。 |
+| `disabled` | `boolean` | `false` | 是否禁用组件。 |
+| `clearable` | `boolean` | `true` | 是否显示清空按钮。 |
+| `filterable` | `boolean` | `false` | 是否开启搜索。 |
+| `autocomplete` | `string` | `'off'` | 原生输入框的自动填充策略。 |
+| `separator` | `string` | `' / '` | 路径展示分隔符。 |
+| `showAllLevels` | `boolean` | `true` | 是否展示完整路径。开启全国根时会隐藏 tag 中的全国前缀。 |
+| `includePathInfo` | `boolean` | `true` | 对象返回时是否附加路径信息。 |
+| `showCheckedStrategy` | `'child' \| 'parent'` | 跟随 `collapseSelected` | Element Plus 多选展示策略。 |
+| `collapseTags` | `boolean` | `true` | 多选时是否折叠 tag。 |
+| `collapseTagsTooltip` | `boolean` | `true` | tag 折叠后是否通过 tooltip 展示完整内容。 |
+| `maxCollapseTags` | `number \| 'auto'` | `'auto'` | 多选折叠时最多展示的 tag 数，`auto` 会根据宽度估算。 |
 
 `checkStrictly` 用于单选时选择任意层级，默认关闭。多选无需该配置，父级选择与半选状态由 Cascader 自身支持。
 
