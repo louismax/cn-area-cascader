@@ -1,6 +1,6 @@
 {
   "name": "@louismax/cn-area-cascader",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "China province city district cascader for Vue 3 and Element Plus.",
   "author": "louismax",
   "license": "MIT",

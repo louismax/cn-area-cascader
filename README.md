@@ -95,6 +95,7 @@ fullLabel
 | `disabled` | `boolean` | `false` | 是否禁用组件。 |
 | `clearable` | `boolean` | `true` | 是否显示清空按钮。 |
 | `filterable` | `boolean` | `false` | 是否开启搜索。 |
+| `autocomplete` | `string` | `'off'` | Vue3 原生输入框的自动填充策略。 |
 | `separator` | `string` | `' / '` | 路径展示分隔符。 |
 | `showAllLevels` | `boolean` | `true` | 是否在选择器展示完整路径。开启全国根时，组件会隐藏 tag 中的全国前缀，但保留省市区路径。 |
 | `includePathInfo` | `boolean` | `true` | 对象返回时是否附加 `pathLabels`、`pathValues`、`fullLabel` 等路径信息。 |
